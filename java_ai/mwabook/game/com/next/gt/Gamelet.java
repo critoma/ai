@@ -1,0 +1,193 @@
+/**
+ *
+ * Gamelet.java
+ * @author	Mark G. Tacchi (mtacchi@next.com)
+ * @version	0.8
+ * Mar 27/1996
+ *
+ * Gamelet contains a thread which is used for distributing ticks to all
+ * manager objects.  A tick is basically an instant in time and represents
+ * the time granularity of the game.
+ *
+ */
+
+package com.next.gt;
+
+import java.util.Date;
+import java.util.Vector;
+import java.awt.Graphics;
+import java.awt.Event;
+
+abstract public class Gamelet extends java.applet.Applet implements Runnable  {
+
+  //
+  // This is the main thread, used for ticks.
+  //
+  public Thread runner= null;
+
+  //
+  // Gamelet is the master time keeper.
+  //
+  public long currentTickTimeMillis= System.currentTimeMillis();
+  public long lastTickTimeMillis;
+
+  //
+  // Gamelet is the manager of the managers.
+  //
+  public ActorManager		actorManager= new ActorManager(this);
+  public DisplayManager		displayManager= new DisplayManager(this);
+  public ScoreManager		scoreManager;
+  public EventManager		eventManager= new EventManager();
+
+  //
+  // Sleep time for the thread.
+  //
+ public int				SLEEP_MILLIS= 50;
+
+
+
+/**
+ * Generate a random double between two doubles.
+ */
+public static double randBetween(double a, double b)
+{
+  double		val, scale, tmp;
+
+  if (a > b) {
+    tmp= a; a= b; b= tmp;
+  } /*endif*/
+
+  scale = (b-a);
+  val = scale * Math.random();
+
+  return (a + val);
+
+} /*randBetween*/
+
+
+
+/**
+ * Initialize.
+ */
+public void init() {
+} /*init*/
+
+
+
+/**
+ * Start the thread.
+ */
+public void start() {
+  if(runner==null) { //start new thread if it doesn't exist
+    runner= new Thread(this);
+    runner.start();
+	//runner.setPriority (Thread.MAX_PRIORITY);
+  } /*endif*/
+
+} /*start*/
+
+
+
+/**
+ * Stop the thread.
+ */
+public void stop() {
+  if (runner != null)
+    runner.stop (); //kill thread when applet is stopped
+  runner= null;
+} /*stop*/
+
+
+
+public long sleepMillis () {
+  return SLEEP_MILLIS;
+}
+
+
+
+/**
+ * Execution loop.  Used to call tick().
+ */
+public void run() {
+
+  while (runner != null){
+      try {
+		Thread.sleep (sleepMillis ());
+	  } catch(InterruptedException e){} //sleep
+    tick();
+  } /*endwhile*/
+
+  runner= null;
+
+} /*run*/
+
+
+
+/**
+ * Distribute tick to the ActorManager and update display.
+ */
+public void tick() {
+
+  lastTickTimeMillis= currentTickTimeMillis;
+  currentTickTimeMillis= System.currentTimeMillis();
+
+  actorManager.tick();
+
+  repaint();
+
+} /*tick*/
+
+
+
+/**
+ * Pass the event along to the EventManager for handling.
+ */
+public boolean handleEvent (Event theEvent) {
+  boolean returnValue= false;
+
+  //
+  // ignore events which occur before objects are ready for them
+  //
+  if (eventManager!=null)
+    returnValue= eventManager.handleEvent(theEvent);
+
+  return returnValue;
+} /*handleEvent*/
+
+
+
+/**
+ * Calculater the difference between the current tick and the last one.
+ */
+public double deltaTickTimeMillis() {
+  return (double)(currentTickTimeMillis - lastTickTimeMillis);
+} /*deltaTickTimeMillis*/
+
+
+
+/**
+ * Override update to avoid screen clears.
+ */
+public void update(Graphics g) {
+  paint(g);
+} /*update*/
+
+
+
+/**
+ * Pass the Graphics onto the DisplayManager.
+ */
+public void paint(Graphics g) {
+  displayManager.paint(g);
+} /*paint*/
+
+
+
+/**
+ * Provide standard Gamelet info.
+ */
+public String getAppletInfo() {
+  return "The Gamelet Toolkit\nVersion 0.8\nWritten by Mark Tacchi, mtacchi@NeXT.COM\n\nYou are free to use, copy, and modify the source without restriction.  However, it is requested that the author is mentioned in any pertinent credit sections released with code developed with the Gamelet Toolkit.";
+} /*getAppletInfo*/
+} /*Gamelet*/
+

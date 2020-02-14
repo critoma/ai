@@ -1,0 +1,83 @@
+<HTML>
+ <HEADING>
+   <TITLE>Readme file for Mark Watson's Intelligent Java Applications book - updated for JDK1.2.2</TITLE>
+ </HEADING>
+<BODY>
+<h1>Greetings</h1>
+Thank you for purchasing the new printing of my book! I wrote the
+example programs for this book over four years ago using the JDK1.01.
+This CD-ROM has been updated to work with JDK1.2.2 (tested under Windows NT
+and Linux). I tried to change the example programs as little as possible
+to maintain compatibility with the text.
+<p>
+When I wrote this book, I used Java applets for all of the examples.
+I now rarely use applets, favoring Java applications. I was tempted
+to rewrite the examples as applications, but I was concerned that
+such drastic changes would cause some confusion. However, the core
+AI classes can (obviously) be used in the reader's applications
+or applets.
+<p>
+The contents of the CD-ROM contains all the files in an uncompressed form and
+also everything in a ZIP file <b>JavaAI.zip</b>. You can either copy the
+contents of the CD-ROM to a new directory on your hard disk (and
+delete <b>JavaAI.zip</b>), or copy the
+<b>JavaAI.zip</b> file to a new directory on your hard disk and UNZIP it.
+You might consider using the ZIP file if you have problems with files
+have "read only" permissions after copying the CD-ROM to your hard disk.
+<p>Note: the contents of this CD are also on my web site at the
+<a href="http://www.markwatson.com/books/JavaAI.zip">URL for file JavaAI.zip</a>.
+<UL><LI><I>Mark Watson, March 7, 2000</I></LI></UL>
+
+<h1>Main book examples in the <b>mwa</b> directory</h1>
+The batch file <b>c.bat</b> can be used to compile
+the entire <b>mwa</b> directory. (This directory is already compiled,
+but this batch file is provided in case you want to recompile
+everything.)
+<p>
+Run the example programs by typing (change "\" to "/" for Linux/UNIX):
+<UL>
+<LI>appletviewer test\testGUI.html</LI>
+<LI>appletviewer test\testFrame.html</LI>
+<LI>appletviewer test\testNeural.html</LI>
+<LI>appletviewer test\testHand_1.html</LI>
+<LI>appletviewer test\History.html</LI>
+<LI>appletviewer test\InfoAgent.html</LI>
+<LI>appletviewer test\testSendMail.html</LI>
+<LI>appletviewer test\testURLdata.html</LI>
+</UL>
+Note: due to the new default Java security manager, the <b>testURLdata</b>
+test must have a local web server running.
+<h1>Genetic Algorithm enhanced game</h1>
+This example is Mark G. Tacchi's fantastic "asteroids" game
+with some simple changes to use a genetic algorythm to
+change the behavior of the enemy ships. Use the arrow keys
+to move the player ship and the space bar to fire.
+<p>The command file <b>run.bat</b> in the <b>game</b>
+directory is used to start the applet with the default
+security manager.
+
+<h1>Jess - Ernest J. Friedman-Hill's Java expert system shell</h1>
+Thanks to Ernest (and his employer Sandia National Laboratories)
+for making Jess publically available.
+<p>Due to licensing restrictions, you must fetch your own copy of
+Jess version 5.0 from Ernest's <a href="http://herzberg.ca.sandia.gov/jess/">web site</a>.
+<p>When you UNZIP the Jess distribution, you will get a directory
+<b>Jess50</b> created. You must then copy the contents of <b>JessStuff</b>
+to the Jess distribution direrctory.
+The Jess distribution directory <b>Jess50</b> now should contain the
+standard Jess distribution (please read the LICENSE file) with the
+addition of the *.clp example programs from the book in the
+<b>Jess50</b> directory. Run the book examples (changed from the
+book text!) by typing:
+<UL>
+ <LI>java jess.Main test1.clp</LI>
+ <LI>java jess.Main test2.clp</LI>
+ <LI>java jess.Main Diver1.clp</LI>
+ <LI>java jess.Main Diver2.clp</LI>
+</UL>
+Note that all of these examples have "(reset) (run)" added
+to the end of the file to automatically execute using Jess version 5.
+Also, for the diver examples, when answering <b>Y</b> or <b>N</b> you
+must use capital letters.
+</BODY>
+</HTML>
